@@ -140,13 +140,13 @@ class Student extends CI_Controller
             $username = $this->input->post('username');
             $data['stdn'] = $this->db->get_where('student', ['username' => $username])->row_array();
 
-            $lecturers = $this->input->post('lecturers');
-            $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lecturers])->row_array();
+            $lect2 = $this->input->post('lect2');
+            $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lect2])->row_array();
 
             $upload_file = $_FILES['file']['name'];
 
             if ($upload_file) {
-                $config['allowed_types'] = 'pdf';
+                $config['allowed_types'] = 'pdf|jpg|png';
                 $config['max_size']      = '10240';
                 $config['upload_path']   = './assets/dist/file/';
 
@@ -163,7 +163,8 @@ class Student extends CI_Controller
                 'fullname' => $data['stdn']['fullname'],
                 'class' => $data['stdn']['class'],
                 'title' => htmlspecialchars($this->input->post('title', true)),
-                'lecturers' => $lecturers,
+                'lect2' => htmlspecialchars($this->input->post('lect2', true)),
+                'lect3' => htmlspecialchars($this->input->post('lect3', true)),
                 'study' => $data['lect']['study'],
                 'phone' => $data['stdn']['phone'],
                 'approval' => 3,
@@ -202,7 +203,7 @@ class Student extends CI_Controller
 
             $lecturers = $this->input->post('lecturers');
             $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lecturers])->row_array();
-            
+
             $upload_file = $_FILES['file']['name'];
 
             if ($upload_file) {

@@ -935,8 +935,7 @@ class Admin extends CI_Controller
             $filter = array("lecturers" => $lect1, "year" => $year);
             $data['submax'] = $this->db->get_where('submission', $filter)->num_rows();
             $max = $data['submax'];
-            // var_dump($max);
-            // die;
+
             if ($max < 10) {
                 $username = $this->input->post('username');
                 $data['stdn'] = $this->db->get_where('student', ['username' => $username])->row_array();

@@ -24,13 +24,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <small class="text-danger"><?= form_error('lecturers'); ?></small>
-                            <div class="input-group mb-3">
-                                <select class="custom-select select2" id="lecturers" name="lecturers">
-                                    <?php foreach ($lecturers as $ltr) : ?>
-                                        <option value="<?= $ltr['lecturers']; ?>"><?= $ltr['lecturers']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <small class="text-danger"><?= form_error('lect2'); ?></small>
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select select2" id="lect2" name="lect2">
+                                            <option value="" disabled selected>- Select your first lecturers -</option>
+                                            <?php foreach ($lecturers as $ltr) : ?>
+                                                <option value="<?= $ltr['lecturers']; ?>"><?= $ltr['lecturers']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <small class="text-danger"><?= form_error('lect3'); ?></small>
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select select2" id="lect3" name="lect3">
+                                            <option value="" disabled selected>- Select your second lecturers -</option>
+                                            <?php foreach ($lecturers as $ltr) : ?>
+                                                <option value="<?= $ltr['lecturers']; ?>"><?= $ltr['lecturers']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <small class="text-danger"><?= form_error('file'); ?></small>
                             <div class="input-group mb-3">
