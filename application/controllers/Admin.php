@@ -829,8 +829,8 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('title', 'Title', 'required|trim');
         $this->form_validation->set_rules('lecturers', 'Lecturers', 'required|trim');
-        $this->form_validation->set_rules('lect2', 'Lecturer 2', 'required|trim');
-        $this->form_validation->set_rules('lect3', 'Lecturer 3', 'required|trim');
+        $this->form_validation->set_rules('lect2', 'Lecturers 2', 'required|trim|differs[lect3]');
+        $this->form_validation->set_rules('lect3', 'Lecturers 3', 'required|trim|differs[lect2]');
         $this->form_validation->set_rules('approval', 'Approval', 'required|trim');
 
         if ($this->form_validation->run() == false) {
@@ -854,6 +854,7 @@ class Admin extends CI_Controller
                 $data['stdn'] = $this->db->get_where('student', ['username' => $username])->row_array();
 
                 $lecturers = $this->input->post('lecturers');
+
                 $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lecturers])->row_array();
 
                 $upload_file = $_FILES['file']['name'];
@@ -885,12 +886,17 @@ class Admin extends CI_Controller
                 $phone = $data['stdn']['phone'];
                 $approval = $this->input->post('approval');
 
+                $lect2 = $this->input->post('lect2');
+                $lect3 = $this->input->post('lect3');
+
                 $this->db->set('username', $username);
                 $this->db->set('fullname', $fullname);
                 $this->db->set('class', $class);
                 $this->db->set('title', $title);
                 $this->db->set('study', $study);
                 $this->db->set('lecturers', $lecturers);
+                $this->db->set('lect2', $lect2);
+                $this->db->set('lect3', $lect3);
                 $this->db->set('phone', $phone);
                 $this->db->set('approval', $approval);
 
