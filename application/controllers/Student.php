@@ -126,7 +126,8 @@ class Student extends CI_Controller
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[submission.username]');
         $this->form_validation->set_rules('title', 'Title', 'required|trim|is_unique[submission.title]');
-        $this->form_validation->set_rules('lecturers', 'Lecturers', 'required|trim');
+        $this->form_validation->set_rules('lect2', 'Lect 2', 'required|trim');
+        $this->form_validation->set_rules('lect3', 'Lect 3', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             $data['HeadTitle'] = 'Submission';
@@ -187,7 +188,8 @@ class Student extends CI_Controller
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('title', 'Title', 'required|trim');
-        $this->form_validation->set_rules('lecturers', 'Lecturers', 'required|trim');
+        $this->form_validation->set_rules('lect2', 'Lect 2', 'required|trim');
+        $this->form_validation->set_rules('lect3', 'Lect 3', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             $data['HeadTitle'] = 'Submission';
