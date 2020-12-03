@@ -18,6 +18,7 @@
                                     <th>Username</th>
                                     <th>Full Name</th>
                                     <th>Class</th>
+                                    <th>lecturers</th>
                                     <th>File</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -29,6 +30,7 @@
                                         <td><?= $sbm['username'] ?></td>
                                         <td><?= $sbm['fullname'] ?></td>
                                         <td><?= $sbm['class'] ?></td>
+                                        <td><?= $sbm['lecturers'] ?></td>
                                         <td><a href="<?= base_url('assets/dist/file/') .  $sbm['file']; ?>" class="btn btn-success btn-sm"><i class="fas fa-download"></i></a></td>
 
                                         <td><?php if ($sbm['approval'] == '3') : ?>

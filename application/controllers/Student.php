@@ -126,6 +126,7 @@ class Student extends CI_Controller
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[submission.username]');
         $this->form_validation->set_rules('title', 'Title', 'required|trim|is_unique[submission.title]');
+        $this->form_validation->set_rules('year', 'Year', 'required|trim');
         $this->form_validation->set_rules('lect2', 'Lecturers 1', 'required|trim|differs[lect3]');
         $this->form_validation->set_rules('lect3', 'Lecturers 2', 'required|trim|differs[lect2]');
 
@@ -164,6 +165,7 @@ class Student extends CI_Controller
                 'fullname' => $data['stdn']['fullname'],
                 'class' => $data['stdn']['class'],
                 'title' => htmlspecialchars($this->input->post('title', true)),
+                'year' => $this->input->post('year'),
                 'lect2' => htmlspecialchars($this->input->post('lect2', true)),
                 'lect3' => htmlspecialchars($this->input->post('lect3', true)),
                 'study' => $data['lect']['study'],
@@ -188,6 +190,7 @@ class Student extends CI_Controller
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('title', 'Title', 'required|trim');
+        $this->form_validation->set_rules('year', 'Year', 'required|trim');
         $this->form_validation->set_rules('lect2', 'Lecturers 1', 'required|trim|differs[lect3]');
         $this->form_validation->set_rules('lect3', 'Lecturers 2', 'required|trim|differs[lect2]');
 
@@ -203,8 +206,8 @@ class Student extends CI_Controller
             $username = $this->input->post('username');
             $data['stdn'] = $this->db->get_where('student', ['username' => $username])->row_array();
 
-            $lecturers = $this->input->post('lecturers');
-            $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lecturers])->row_array();
+            $lect2 = $this->input->post('lect2');
+            $data['lect'] = $this->db->get_where('lecturers', ['lecturers' => $lect2])->row_array();
 
             $upload_file = $_FILES['file']['name'];
 
@@ -231,6 +234,9 @@ class Student extends CI_Controller
             $fullname = $data['stdn']['fullname'];
             $class = $data['stdn']['class'];
             $title = $this->input->post('title');
+            $year = $this->input->post('year');
+            $lect2 = $this->input->post('lect2');
+            $lect3 = $this->input->post('lect3');
             $study = $data['lect']['study'];
             $phone = $data['stdn']['phone'];
             $approval = '3';
@@ -239,8 +245,10 @@ class Student extends CI_Controller
             $this->db->set('fullname', $fullname);
             $this->db->set('class', $class);
             $this->db->set('title', $title);
+            $this->db->set('year', $year);
+            $this->db->set('lect2', $lect2);
+            $this->db->set('lect3', $lect3);
             $this->db->set('study', $study);
-            $this->db->set('lecturers', $lecturers);
             $this->db->set('phone', $phone);
             $this->db->set('approval', $approval);
 

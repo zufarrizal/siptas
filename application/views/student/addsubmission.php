@@ -24,6 +24,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <small class="text-danger"><?= form_error('year'); ?></small>
+                            <div class="input-group mb-3">
+                                <select class="custom-select select2" id="year" name="year">
+                                    <option value="" disabled selected>- Select Year Submission -</option>
+                                    <?php for ($i = 0; $i <= 40; $i++) {
+                                        $year = date('Y') - $i;
+                                        if ($student['year'] == $year) {
+                                            echo '<option value=' . $year . ' selected>' . $year . '</option>';
+                                        } else {
+                                            echo '<option value=' . $year . ' >' . $year . '</option>';
+                                        }
+                                    } ?>
+                                </select>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <small class="text-danger"><?= form_error('lect2'); ?></small>

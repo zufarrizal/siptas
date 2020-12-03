@@ -15,6 +15,7 @@
                             <thead>
                                 <tr>
                                     <th>Lecturers</th>
+                                    <th>Student</th>
                                     <th>Program Study</th>
                                     <th>Action</th>
                                 </tr>
@@ -23,6 +24,11 @@
                                 <?php foreach ($lecturers as $ltr) : ?>
                                     <tr>
                                         <td><?= $ltr['lecturers'] ?></td>
+                                        <?php
+                                        $ltrs = $ltr['lecturers'];
+                                        $student = $this->db->get_where('submission', ['lecturers' => $ltrs])->num_rows();
+                                        ?>
+                                        <td><?= $student; ?></td>
                                         <td><?= $ltr['study'] ?></td>
                                         <td><a href="<?= base_url('admin/editlecturers/') .  $ltr['id']; ?>"><span class="btn btn-success btn-sm"><i class="fas fa-edit"></i></span></a>
                                             <a href="<?= base_url('admin/deleteLecturers/') .  $ltr['id']; ?>" class="btn btn-danger btn-sm delete-data"><i class="fas fa-trash "></i></a>
