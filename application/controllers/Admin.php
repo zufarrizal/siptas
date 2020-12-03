@@ -779,6 +779,7 @@ class Admin extends CI_Controller
         // Memuat Data By ID
         $data['submission'] = $this->Submission_Model->getSubmissionById($id);
         $data['history'] = $this->db->get_where('history')->result_array();
+        $data['lecturers'] = $this->Lecturers_Model->getAllLecturers();
 
         $this->form_validation->set_rules('approval', 'Approval', 'required|trim');
         if ($this->form_validation->run() == false) {
@@ -790,27 +791,43 @@ class Admin extends CI_Controller
             $this->load->view('admin/detailsubmission', $data);
             $this->load->view('templates/system_footer');
         } else {
-            $id = $this->input->post('id');
-            $note = $this->input->post('note');
-            $approval = $this->input->post('approval');
-            $this->db->set('note', $note);
-            $this->db->set('approval', $approval);
+            $lecturers = $this->input->post('lecturers');
+            $year = $this->input->post('year');
 
-            $this->db->where('id', $id);
-            $this->db->update('submission');
+            $filter = array("lecturers" => $lecturers, "year" => $year);
+            $data['submax'] = $this->db->get_where('submission', $filter)->num_rows();
+            $max = $data['submax'];
 
-            if ($approval == 1) {
-                redirect('admin/submission');
-            } elseif ($approval == 3) {
-                redirect('admin/submission');
+            if ($max < 10) {
+                $id = $this->input->post('id');
+                $note = $this->input->post('note');
+                $approval = $this->input->post('approval');
+
+                $this->db->set('lecturers', $lecturers);
+                $this->db->set('note', $note);
+                $this->db->set('approval', $approval);
+
+                $this->db->where('id', $id);
+                $this->db->update('submission');
+
+                if ($approval == 1) {
+                    redirect('admin/submission');
+                } elseif ($approval == 3) {
+                    redirect('admin/submission');
+                } else {
+                    $data = [
+                        'username' => $this->input->post('username'),
+                        'history' => $this->input->post('note'),
+                        'date' => time()
+                    ];
+                    $this->db->insert('history', $data);
+                    redirect('admin/submission');
+                }
             } else {
-                $data = [
-                    'username' => $this->input->post('username'),
-                    'history' => $this->input->post('note'),
-                    'date' => time()
-                ];
-                $this->db->insert('history', $data);
-                redirect('admin/submission');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">The lecturer you choose is full this year. please choose another lecturer!<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button></div>');
+                redirect('Admin/detailsubmission/' . $id);
             }
         }
     }
@@ -847,8 +864,7 @@ class Admin extends CI_Controller
             $filter = array("lecturers" => $lect1, "year" => $year);
             $data['submax'] = $this->db->get_where('submission', $filter)->num_rows();
             $max = $data['submax'];
-            // var_dump($max);
-            // die;
+
             if ($max < 10) {
                 $username = $this->input->post('username');
                 $data['stdn'] = $this->db->get_where('student', ['username' => $username])->row_array();
@@ -907,7 +923,7 @@ class Admin extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">The lecturer you choose is full this year. please choose another lecturer!<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button></div>');
-                redirect('Admin/addsubmission');
+                redirect('Admin/editsubmission/' . $id);
             }
         }
     }

@@ -31,8 +31,16 @@
                                         <td>: <?= $submission['study']; ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="p-2">Lecturers </td>
-                                        <td>: <?= $submission['lecturers']; ?></td>
+                                        <td class="p-2">Lecturer 1 </td>
+                                        <td>: <?= $submission['lect2']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Lecturer 2 </td>
+                                        <td>: <?= $submission['lect3']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Year </td>
+                                        <td>: <?= $submission['year']; ?></td>
                                     </tr>
                                     <tr>
                                         <td class="p-2">File </td>
@@ -50,7 +58,16 @@
                         <form action="" method="POST">
                             <input type="text" class="form-control" id="id" name="id" value="<?= $submission['id']; ?>" hidden>
                             <input type="text" class="form-control" id="username" name="username" value="<?= $submission['username']; ?>" hidden>
+                            <input type="text" class="form-control" id="year" name="year" value="<?= $submission['year']; ?>" hidden>
 
+                            <div class="input-group mb-3">
+                                <select class="custom-select select2" id="lecturers" name="lecturers">
+                                    <option value="" disabled selected>- Choose one of the selected lecturers -</option>
+                                    <?php foreach ($lecturers as $ltr) : ?>
+                                        <option value="<?= $ltr['lecturers']; ?>"><?= $ltr['lecturers']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="note" name="note" placeholder="Note" value="<?= $submission['note']; ?>">
                                 <div class="input-group-append">
