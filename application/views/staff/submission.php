@@ -8,6 +8,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Data Table Submission</h3>
+                        <a href="<?= base_url('Staff/excel') ?>" class="btn btn-primary btn-sm float-right">Export To Excel</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

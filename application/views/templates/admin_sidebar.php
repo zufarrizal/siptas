@@ -35,7 +35,7 @@
                         </p>
                         </a>
                     </li>
-                    <?php if ($HeadTitle == 'Admin') : ?>
+                    <?php if ($HeadTitle == 'Direktur') : ?>
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                             <?php else : ?>
@@ -45,29 +45,29 @@
                             <?php endif; ?>
                             <i class="nav-icon fas fa-user"></i>
                             <p>
-                                Admin
+                                Direktur
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <?php if ($title == 'Admin') : ?>
+                                    <?php if ($title == 'Direktur') : ?>
                                         <a href="<?= base_url('admin/admin'); ?>" class="nav-link active">
                                         <?php else : ?>
                                             <a href="<?= base_url('admin/admin'); ?>" class="nav-link">
                                             <?php endif; ?>
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Data Admin</p>
+                                            <p>Data Direktur</p>
                                             </a>
                                 </li>
                                 <li class="nav-item">
-                                    <?php if ($title == 'Add Admin') : ?>
+                                    <?php if ($title == 'Add Direktur') : ?>
                                         <a href="<?= base_url('admin/addadmin'); ?>" class="nav-link active">
                                         <?php else : ?>
                                             <a href="<?= base_url('admin/addadmin'); ?>" class="nav-link">
                                             <?php endif; ?>
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Add Admin</p>
+                                            <p>Add Direktur</p>
                                             </a>
                                 </li>
                             </ul>

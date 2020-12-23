@@ -61,8 +61,8 @@ class Admin extends CI_Controller
         // Memuat Data View
         $data['admin'] = $this->Admin_Model->getAllAdmin();
 
-        $data['title'] = 'Admin';
-        $data['HeadTitle'] = 'Admin';
+        $data['title'] = 'Direktur';
+        $data['HeadTitle'] = 'Direktur';
 
         $this->load->view('templates/system_header', $data);
         $this->load->view('templates/admin_sidebar', $data);
@@ -81,8 +81,8 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Edit Admin';
-            $data['HeadTitle'] = 'Admin';
+            $data['title'] = 'Edit Direktur';
+            $data['HeadTitle'] = 'Direktur';
 
             $this->load->view('templates/system_header', $data);
             $this->load->view('templates/admin_sidebar', $data);
@@ -135,8 +135,8 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Add Admin';
-            $data['HeadTitle'] = 'Admin';
+            $data['title'] = 'Add Direktur';
+            $data['HeadTitle'] = 'Direktur';
             $this->load->view('templates/system_header', $data);
             $this->load->view('templates/admin_sidebar', $data);
             $this->load->view('admin/addadmin', $data);

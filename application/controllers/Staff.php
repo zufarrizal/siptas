@@ -603,4 +603,114 @@ class Staff extends CI_Controller
         $this->load->view('staff/printsub', $data);
         $this->load->view('templates/system_footer');
     }
+
+    public function Excel()
+    {
+        $data['user'] = $this->db->get_where('staff', ['username' => $this->session->userdata('username')])->row_array();
+
+        $data['lecturers'] = $this->Lecturers_Model->getAllLecturers();
+        $data['submission'] = $this->Submission_Model->getAllSubmission();
+        $data['study'] = $this->Study_Model->getAllStudy();
+        $data['HeadTitle'] = 'Submission';
+        $data['title'] = 'Export Submission to Excel';
+
+        $this->form_validation->set_rules('lecturers', 'Lecturers', 'required|trim');
+
+
+        $this->load->view('templates/system_header', $data);
+        $this->load->view('templates/staff_sidebar', $data);
+        $this->load->view('staff/pexcel', $data);
+        $this->load->view('templates/system_footer');
+    }
+    public function Excel_ly()
+    {
+        $lect = $this->input->post('lecturers');
+        $year = $this->input->post('year');
+
+        $filter = array("lecturers" => $lect, "year" => $year);
+        $data['submission'] = $this->db->get_where('submission', $filter)->result_array();
+
+        $this->_printsub($data);
+    }
+    public function Excel_year()
+    {
+        $year = $this->input->post('year');
+
+        $filter = array("year" => $year);
+        $data['submission'] = $this->db->get_where('submission', $filter)->result_array();
+
+        $this->_printsub($data);
+    }
+
+    public function Excel_class()
+    {
+        $class = $this->input->post('class');
+        $year = $this->input->post('year');
+
+        $filter = array("class" => $class, "year" => $year);
+        $data['submission'] = $this->db->get_where('submission', $filter)->result_array();
+
+        $this->_printsub($data);
+    }
+    public function Excel_study()
+    {
+        $study = $this->input->post('study');
+        $year = $this->input->post('year');
+
+        $filter = array("study" => $study, "year" => $year);
+        $data['submission'] = $this->db->get_where('submission', $filter)->result_array();
+
+        $this->_printsub($data);
+    }
+
+    private function _printsub($data)
+    {
+        require(APPPATH . 'PHPExcel-1.8\Classes\PHPExcel.php');
+        require(APPPATH . 'PHPExcel-1.8\Classes\PHPExcel\Writer\Excel2007.php');
+
+        $object = new PHPExcel();
+        $object->getProperties()->setCreator("SIPTAS");
+        $object->getProperties()->setLastModifiedBy("SIPTAS");
+        $object->getProperties()->setTitle("Submission");
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->SetCellValue('A1', 'NO');
+        $object->getActiveSheet()->SetCellValue('B1', 'NPM');
+        $object->getActiveSheet()->SetCellValue('C1', 'NAMA LENGKAP');
+        $object->getActiveSheet()->SetCellValue('D1', 'KELAS');
+        $object->getActiveSheet()->SetCellValue('E1', 'DOSEN PEMBIMBING');
+        $object->getActiveSheet()->SetCellValue('F1', 'JUDUL');
+
+        $object->getSheet(0)->getColumnDimension('A')->setAutoSize(true);
+        $object->getSheet(0)->getColumnDimension('B')->setAutoSize(true);
+        $object->getSheet(0)->getColumnDimension('C')->setAutoSize(true);
+        $object->getSheet(0)->getColumnDimension('D')->setAutoSize(true);
+        $object->getSheet(0)->getColumnDimension('E')->setAutoSize(true);
+        $object->getSheet(0)->getColumnDimension('F')->setAutoSize(true);
+
+        $baris = 2;
+        $no = 1;
+
+        foreach ($data['submission'] as $sbm) {
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $sbm['username']);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $sbm['fullname']);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $sbm['class']);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $sbm['lecturers']);
+            $object->getActiveSheet()->setCellValue('F' . $baris, $sbm['title']);
+            $baris++;
+        }
+
+        $filename = "Data Submission" . '.xlsx';
+        $object->getActiveSheet()->setTitle("Data Submission");
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createWriter($object, 'Excel2007');
+        $writer->save('php://output');
+
+        exit;
+    }
 }
